@@ -1,3 +1,6 @@
+function toggleConfirmation() {
+    document.querySelector('.confirm-overlay').classList.toggle('active');
+}
 function toggleModal() {
     document.querySelector('.modal-overlay').classList.toggle('active');
 }
@@ -89,6 +92,15 @@ const DOM = {
             .innerHTML = Utils.formatCurrency(Transaction.total())
     },
 
+    resetBalance() {
+        document.getElementById('incomeDisplay')
+            .innerHTML = Utils.formatCurrency(0)
+        document.getElementById('expenseDisplay')
+            .innerHTML = Utils.formatCurrency(0)
+        document.getElementById('totalDisplay')
+            .innerHTML = Utils.formatCurrency(0)
+    },
+
     clearTransactions() {
         DOM.transactionsContainer.innerHTML = ""
     }
@@ -96,9 +108,9 @@ const DOM = {
 
 const Utils = {
     formatAmount(value) {
-        value = Number(value.replace(/\,\./g, "")) * 100
+        value = value * 100
 
-        return value
+        return Math.round(value)
     },
 
     formatDate(date) {
@@ -174,6 +186,14 @@ const Form = {
             alert(error.message)
         }
     }
+}
+
+function confirm() {
+    localStorage.clear()
+    DOM.clearTransactions()
+    DOM.resetBalance()
+    toggleConfirmation()
+
 }
 
 
